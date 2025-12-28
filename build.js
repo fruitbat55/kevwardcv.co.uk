@@ -1,21 +1,28 @@
 const fs = require('fs');
 const path = require('path');
 
-// Create dist directory if it doesn't exist
+// Clean dist directory if it exists
 const distDir = path.join(__dirname, 'dist');
-if (!fs.existsSync(distDir)) {
-  fs.mkdirSync(distDir, { recursive: true });
+if (fs.existsSync(distDir)) {
+  fs.rmSync(distDir, { recursive: true, force: true });
 }
 
-// Copy HTML files
+// Create dist directory
+fs.mkdirSync(distDir, { recursive: true });
+
+// Copy files from src to dist
 const srcDir = path.join(__dirname, 'src');
 if (fs.existsSync(srcDir)) {
   const files = fs.readdirSync(srcDir);
   files.forEach(file => {
     const srcPath = path.join(srcDir, file);
     const distPath = path.join(distDir, file);
-    fs.copyFileSync(srcPath, distPath);
-    console.log(`Copied ${file} to dist/`);
+    
+    // Only copy if it's a file (not a directory)
+    if (fs.statSync(srcPath).isFile()) {
+      fs.copyFileSync(srcPath, distPath);
+      console.log(`Copied ${file} to dist/`);
+    }
   });
 }
 
