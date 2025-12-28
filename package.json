@@ -1,0 +1,12 @@
+{
+  "name": "kevwardcv",
+  "version": "1.0.0",
+  "description": "Kev Ward CV Website",
+  "scripts": {
+    "build": "node build.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": ["cv", "resume", "portfolio"],
+  "author": "Kev Ward",
+  "license": "ISC"
+}
